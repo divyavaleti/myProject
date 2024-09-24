@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Detection</title>
+</head>
+<body>
+    <h1>Upload Image</h1>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*">
+        <button type="submit">Predict</button>
+    </form>
+    
+    <div id="result"></div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            
+            console.log('Form submitted!');  // Debugging line
+            
+            const formData = new FormData(this);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const result = await response.text();
+            console.log('Prediction result:', result);  // Debugging line
+            document.getElementById('result').innerHTML = result;
+        });
+    </script>
+</body>
+</html>
